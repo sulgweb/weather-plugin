@@ -1,0 +1,33 @@
+{
+	"manifest_version": 2,
+	"name": "chrome天气插件",
+	"description": "基于vue3.x版本编写的chrome天气插件，可用于掘金博客",
+	"version": "1.0.0",
+	"browser_action": {
+		"default_title": "chrome天气插件",
+		"default_icon": "assets/images/icon48.png",
+		"default_popup": "popup.html"
+	},
+	"permissions": [],
+	"background": {
+		"scripts": ["js/chunk-vendors.js","js/background.js"]
+	},
+	"icons": {
+		"16": "assets/images/icon16.png",
+		"48": "assets/images/icon48.png",
+		"128": "assets/images/icon128.png"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"https://juejin.cn/*",
+				"https://*.juejin.cn/*"
+			],
+			"css": ["css/content.css","css/chunk-vendors.css"],
+			"js": ["js/chunk-vendors.js","js/content.js"],
+			"run_at": "document_idle"
+		}
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"web_accessible_resources": ["js/inject.js"]
+}

@@ -1,0 +1,57 @@
+{
+  "name":"weather-plugin",
+  "description":"chrome天气插件",
+  "author": "小羽",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve --watch",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "watch": "vue-cli-service build --watch"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5",
+    "echarts": "^5.0.0",
+    "element-plus": "^1.0.1-beta.24",
+    "sass": "^1.32.4",
+    "sass-loader": "^10.1.1",
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-component": "^1.1.1",
+    "copy-webpack-plugin": "6.0.2",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0-0",
+    "less": "^4.1.0",
+    "less-loader": "^7.2.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "globals": {
+      "chrome": true
+    },
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
