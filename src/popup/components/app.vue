@@ -2,33 +2,29 @@
  * @description: 
  * @author: 小羽
  * @Date: 2021-01-12 18:42:06
- * @LastEditTime: 2021-01-13 15:28:43
+ * @LastEditTime: 2021-06-14 18:39:29
  * @Copyright: 1.0.0
 -->
 <template>
-	<div class="popup_page">
-		sulg-plugin-cli popup
-		<div class="popup_page_main">
-			this is sulg-plugin-cli popup
-			<div>
-				<el-button type="primary" size="mini">popup button</el-button>
-			</div>
-		</div>
-	</div>
+  <div class="popup_page">这是一个chrome天气插件</div>
 </template>
 
 <script>
-	export default {
-
-	}
+export default {
+  name: "popup",
+  mounted() {
+  },
+  methods: {
+  },
+};
 </script>
 
 <style lang="less" scoped>
-	.popup_page{
-    width: 200px;
-		color: red;
-		.popup_page_main{
-			color: green;
-		}
-	}
+.popup_page {
+  width: 200px;
+  color: #fff;
+  background: #1e77e9;
+  padding: 10px;
+  text-align: center;
+}
 </style>

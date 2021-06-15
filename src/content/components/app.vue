@@ -2,133 +2,182 @@
  * @description: 
  * @author: 小羽
  * @Date: 2021-01-12 18:40:31
- * @LastEditTime: 2021-01-14 13:47:27
+ * @LastEditTime: 2021-06-14 18:28:23
  * @Copyright: 1.0.0
 -->
 <template>
-	<div class="content_page">
-		sulg-plugin-cli content
-		<div class="content_page_main">
-			<div v-for="(item,index) in dataList" :key="index">
-				<el-link :href="item.video" type="primary" target="_blank">{{item.text}}</el-link>
-			</div>
-			<div>
-				<el-button type="primary" size="mini" @click="searchBtn">api-test</el-button>
-			</div>
-			<div ref="myChart" style="width:300px;height:200px"></div>
-		</div>
-	</div>
+  <div class="content-page">
+    <div class="content-page-main" v-if="weatherData.current">
+      <div class="content-page-main-left">
+        <div class="weather-temp">
+          <span class="weather-temp-num">{{weatherData.current.temp}}</span>
+          <span class="weather-temp-symbol">°C</span>
+          <span class="weather-temp-type">{{weatherData.current.weather}}</span>
+        </div>
+        <div class="weather-other">
+          <div class="weather-other-item">湿度：{{weatherData.current.SD}} |</div>
+          <div class="weather-other-item">PM2.5：{{weatherData.current.aqi_pm25}}</div>
+        </div>
+      </div>
+      <div class="content-page-main-right">
+        <div>{{weatherData.current.cityname}} {{weatherData.current.date}}</div>
+        <div>更新时间： {{weatherData.current.time}}</div>
+        <div>{{weatherData.current.WD}}</div>
+      </div>      
+    </div>
+    <div ref="myChart" class="chart-box"></div>
+  </div>
 </template>
 
 <script>
-	export default {
-		data(){
-			return {
-				dataList:[
-					{
-						text:"data_1"
-					},
-					{
-						text:"data_2"
-					},
-					{
-						text:"data_3"
-					}
-				]
-			}
-		},
-		mounted(){
-			this._initData()
-		},
-		methods:{
-			/**
-			* @description: 数据初始化
-			* @Date: 2021-01-14 13:31:30
-			* @author: 小羽
-			* @param {*}
-			* @return {*}
-			*/
-			_initData(){
-				
-				this.drawEchart()
-			},
+import { sortConnectMsgSend } from "../../utils/chrome";
+export default {
+  data() {
+    return {
+      weatherData:{}
+    };
+  },
+  async mounted() {
+    await this._initData();
+  },
+  methods: {
+    /**
+     * @description: 数据初始化
+     * @Date: 2021-01-14 13:31:30
+     * @author: 小羽
+     * @param {*}
+     * @return {*}
+     */
+    async _initData() {
+      sortConnectMsgSend({ name: "getWeatherData",data:{}})
+      chrome.runtime.onConnect.addListener(port=>{
+        if(port.name == 'sulg-long-connect-content') {
+          port.onMessage.addListener(msg => {
+            console.log('收到长连接消息：', msg);
+            if(msg.name === "getWeatherData"){
+              this.weatherData = msg.weatherData
+              console.log(this.weatherData.current)
+              this.drawEchart()
+            }
+          });
+        }
+      });
+    },
 
-			/**
-			 * @description: 搜索按钮
-			 * @Date: 2021-01-14 13:44:47
-			 * @author: 小羽
-			 * @param {*}
-			 * @return {*}
-			 */	
-			searchBtn(){
-				this.searchFunc()
-			},
-
-			/**
-			 * @description: 搜索方法
-			 * @Date: 2021-01-14 13:43:13
-			 * @author: 小羽
-			 * @param {*}
-			 * @return {*}
-			 */
-			searchFunc(){
-				this.$api.testApi.test().then(res=>{
-					this.dataList = res.result
-					console.log(this.dataList)
-				})
-			},
-
-			/**
-			* @description: 绘制echart图表
-			* @Date: 2021-01-14 13:32:07
-			* @author: 小羽
-			* @param {*}
-			* @return {*}
-			*/
-			drawEchart(){
-				let options = {
-					title: {
-						text: 'ECharts 入门示例'
-					},
-					grid:{
-						bottom:20,
-						right:0
-					},
-					tooltip: {},
-					xAxis: {
-						data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-					},
-					yAxis: {},
-					series: [{
-						name: '销量',
-						type: 'bar',
-						data: [5, 20, 36, 10, 10, 20]
-					}]
-				}
-				this.$nextTick(()=>{
+    drawEchart(){
+      let timeList = [],hightTemp = [],lowTemp = []
+      for(let i = 0;i<7;i++){
+        let current = this.weatherData.list.datas[i]
+        timeList.push(current.tm.match(/(\d{4})(\d{2})(\d{2})/).filter((item,index) => index > 0).join('-'))
+        hightTemp.push(current.max)
+        lowTemp.push(current.min)
+      }
+      let  options = {
+              tooltip: {
+                  trigger: 'axis'
+              },
+              color:["#ffdc51","#9dc0f7"],
+              grid:{
+                bottom:10,
+                right:35,
+                containLabel:true
+              },
+              legend: {
+                  data: ['最高气温', '最低气温']
+              },
+              xAxis: {
+                  type: 'category',
+                  boundaryGap: false,
+                  data: timeList
+              },
+              yAxis: {
+                  type: 'value',
+                  axisLabel: {
+                      formatter: '{value} °C'
+                  }
+              },
+              series: [
+                  {
+                      name: '最高气温',
+                      type: 'line',
+                      data: hightTemp,
+                      markPoint: {
+                          data: [
+                              {type: 'max', name: '最大值'},
+                          ]
+                      }
+                  },
+                  {
+                      name: '最低气温',
+                      type: 'line',
+                      data: lowTemp,
+                      markPoint: {
+                          data: [
+                              {type: 'min', name: '最小值'}
+                          ]
+                      },
+                      
+                  }
+              ]
+          };
+        this.$nextTick(()=>{
 					let myChart = this.$echarts.init(this.$refs.myChart);
 					myChart.setOption(options)
 				})
-			}
-		}
-	}
+    }
+  },
+};
 </script>
 
 <style lang="less" scoped>
-	.content_page{
-		text-align: left;
+.content-page {
+  text-align: left;
+  background: #1e77e9;
+  color: #fff;
+  box-shadow: 0 0 5px #999;
+  padding: 10px;
+  //color: red;
+  position: fixed;
+  z-index: 100001;
+  right: 0;
+  bottom: 0;
+  &-main {
+    display: flex;
+    margin-bottom: 10px;
+    &-left{
+      width: 50%;
+      .weather-temp{
+        display: flex;
+        align-items: flex-start;
+        &-num{
+          font-size: 32px;
+          font-weight: bold;
+        }
+        &-type{
+          margin-left: 5px;
+        }
+      }
+      .weather-other{
+        display: flex;
+        align-items: center;
+        &-item{
+          margin-right: 5px;
+        }
+      }
+    }
+    &-right{
+      width: 50%;
+      text-align: right;
+    }
+  }
+  .chart-box{
+    width: 300px;
+    height: 200px;
     background: #fff;
-    box-shadow: 0 0 5px #999;
+    border-radius: 5px;
     padding: 10px;
-		//color: red;
-		position: fixed;
-		z-index: 100001;
-		right: 0;
-		bottom: 0;
-		.content_page_main{
-			//color: green;
-		}
-	}
+  }
+}
 </style>
 
 

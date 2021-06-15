@@ -8,7 +8,13 @@
 		"default_icon": "assets/images/icon48.png",
 		"default_popup": "popup.html"
 	},
-	"permissions": [],
+	"permissions": [
+		"webRequest",
+		"webRequestBlocking",
+		"storage",
+		"http://*/*",
+		"https://*/*"
+	],
 	"background": {
 		"scripts": ["js/chunk-vendors.js","js/background.js"]
 	},
@@ -20,7 +26,6 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"https://juejin.cn/*",
 				"https://*.juejin.cn/*"
 			],
 			"css": ["css/content.css","css/chunk-vendors.css"],

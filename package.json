@@ -1,6 +1,6 @@
 {
-  "name":"weather-plugin",
-  "description":"chrome天气插件",
+  "name": "weather-plugin",
+  "description": "chrome天气插件",
   "author": "小羽",
   "version": "1.0.0",
   "private": true,
@@ -11,6 +11,7 @@
     "watch": "vue-cli-service build --watch"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "echarts": "^5.0.0",
@@ -27,8 +28,8 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-component": "^1.1.1",
     "copy-webpack-plugin": "6.0.2",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0-0",
+    "eslint": "^7.28.0",
+    "eslint-plugin-vue": "^7.11.1",
     "less": "^4.1.0",
     "less-loader": "^7.2.1"
   },
