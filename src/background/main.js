@@ -1,9 +1,9 @@
 /*
- * @description: 
- * @author: 小羽
- * @Date: 2021-01-12 18:39:58
- * @LastEditTime: 2021-06-14 18:35:45
- * @Copyright: 1.0.0
+ * @Description: 
+ * @Author: 小羽
+ * @LastEditors: 小羽
+ * @Date: 2021-06-13 15:29:37
+ * @LastEditTime: 2021-06-16 01:49:20
  */
 import hotReload from '@/utils/hotReload'
 import api from "@/api/index.js"
@@ -21,7 +21,6 @@ chrome.runtime.onMessage.addListener(async function (request, sender, sendRespon
       let areaId = await api.weatherApi.getAreaId(areaLocation.lat,areaLocation.lng)
       let weatherData = await api.weatherApi.getWeather(areaId)
       longConnectMsgSend('content',{name:'getWeatherData',weatherData})
-      longConnectMsgSend('popup',{name:'getWeatherData',weatherData})
     }
   }
   requectFunc[request.name] && requectFunc[request.name](request.data)
@@ -37,5 +36,3 @@ async function longConnectMsgSend(type,data){
   let port = chrome.tabs.connect(tabId, {name: connectObj[type]});
   port.postMessage(data)
 }
-
-

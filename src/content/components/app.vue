@@ -1,9 +1,9 @@
 <!--
- * @description: 
- * @author: 小羽
- * @Date: 2021-01-12 18:40:31
- * @LastEditTime: 2021-06-14 18:28:23
- * @Copyright: 1.0.0
+ * @Description: 
+ * @Author: 小羽
+ * @LastEditors: 小羽
+ * @Date: 2021-06-15 23:09:55
+ * @LastEditTime: 2021-06-16 01:48:55
 -->
 <template>
   <div class="content-page">
@@ -34,7 +34,10 @@ import { sortConnectMsgSend } from "../../utils/chrome";
 export default {
   data() {
     return {
-      weatherData:{}
+      //weatherData:{}
+      weatherData:{
+        
+      }
     };
   },
   async mounted() {

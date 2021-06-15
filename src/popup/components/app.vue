@@ -1,9 +1,9 @@
 <!--
- * @description: 
- * @author: 小羽
- * @Date: 2021-01-12 18:42:06
- * @LastEditTime: 2021-06-14 18:39:29
- * @Copyright: 1.0.0
+ * @Description: 
+ * @Author: 小羽
+ * @LastEditors: 小羽
+ * @Date: 2021-06-13 15:29:37
+ * @LastEditTime: 2021-06-16 01:48:39
 -->
 <template>
   <div class="popup_page">这是一个chrome天气插件</div>

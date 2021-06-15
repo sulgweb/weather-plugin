@@ -1,10 +1,3 @@
-/*
- * @description: 
- * @author: 小羽
- * @Date: 2021-01-12 18:38:05
- * @LastEditTime: 2021-01-14 14:41:22
- * @Copyright: 1.0.0
- */
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require("path");
 

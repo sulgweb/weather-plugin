@@ -1,9 +1,9 @@
 /*
- * @description: 
- * @author: 小羽
- * @Date: 2021-01-13 16:19:51
- * @LastEditTime: 2021-01-14 13:25:16
- * @Copyright: 1.0.0
+ * @Description: 
+ * @Author: 小羽
+ * @LastEditors: 小羽
+ * @Date: 2021-06-13 15:29:37
+ * @LastEditTime: 2021-06-16 01:51:28
  */
 import { createApp } from 'vue'
 import api from "@/api/index.js"

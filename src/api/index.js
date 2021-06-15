@@ -1,10 +1,11 @@
 /*
- * @description: api接口统一出口
- * @author: 小羽
- * @Date: 2021-01-13 15:40:11
- * @LastEditTime: 2021-01-13 15:42:05
- * @Copyright: 1.0.0
+ * @Description: api接口统一出口
+ * @Author: 小羽
+ * @LastEditors: 小羽
+ * @Date: 2021-06-13 15:29:37
+ * @LastEditTime: 2021-06-16 01:49:41
  */
+
 const commonApiObj = {}
 
 let files = require.context('./modules', true, /\.js$/)
