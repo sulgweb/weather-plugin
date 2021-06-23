@@ -4,7 +4,16 @@ import axios from "axios";
 class Weather {
   // 获取地理坐标
   async getAreaLocation(){
-    return await axios.get(`https://map.baidu.com/?qt=ipLocation&t=${new Date().getTime()}`).then(res=>res.data.rgc.result.location)
+    return await axios.get(`https://map.baidu.com/?qt=ipLocation&t=${new Date().getTime()}`).then(res=>{
+      if(!res.data.rgc.result.location){
+        // 如果定位失败则返回广州的地理位置
+        return {
+          lat: 23.188855624765,
+          lng: 113.45977672508
+        }
+      }
+      return res.data.rgc.result.location
+    })
   }
 
   // 获取id
