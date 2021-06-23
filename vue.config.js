@@ -1,40 +1,55 @@
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const path = require("path");
 
 // 复制文件到指定目录
 const copyFiles = [
 	{
-    	from: path.resolve("src/plugins/manifest.json"),
-    	to: `${path.resolve("dist")}/manifest.json`
-  	},
-  	{
-    	from: path.resolve("src/assets"),
-    	to: path.resolve("dist/assets")
-  	},
-  	{
-	    from: path.resolve("src/plugins/inject.js"),
-	    to: path.resolve("dist/js")
-  	}
+		from: path.resolve("src/plugins/manifest.json"),
+		to: `${path.resolve("dist")}/manifest.json`
+	},
+	{
+		from: path.resolve("src/assets"),
+		to: path.resolve("dist/assets")
+	},
+	{
+		from: path.resolve("src/plugins/inject.js"),
+		to: path.resolve("dist/js")
+	}
 ];
 
 // 复制插件
 const plugins = [
-  	new CopyWebpackPlugin({
-    	patterns: copyFiles
-  	})
+	new OptimizeCssAssetsPlugin(),
+	new CopyWebpackPlugin({
+		patterns: copyFiles
+	}),
+	new TerserPlugin({
+		parallel:2,
+		terserOptions:{
+			compress:{
+				inline:false
+			},
+			mangle: {
+				safari10: true
+			}
+		}
+	}),
+	
 ];
 
 // 页面文件
 const pages = {};
 // 配置 popup.html 页面
-const chromeName = ["popup","index"];
+const chromeName = ["popup", "index"];
 
 chromeName.forEach(name => {
-  	pages[name] = {
-    	entry: `src/${name}/main.js`,
-    	template: `src/${name}/index.html`,
-    	filename: `${name}.html`
-  	};
+	pages[name] = {
+		entry: `src/${name}/main.js`,
+		template: `src/${name}/index.html`,
+		filename: `${name}.html`
+	};
 });
 
 module.exports = {
@@ -51,7 +66,7 @@ module.exports = {
 		output: {
 			filename: "js/[name].js"
 		},
-		plugins
+		plugins,
 	},
 	// 配置 content.css
 	css: {

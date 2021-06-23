@@ -31,7 +31,9 @@
     "eslint": "^7.28.0",
     "eslint-plugin-vue": "^7.11.1",
     "less": "^4.1.0",
-    "less-loader": "^7.2.1"
+    "less-loader": "^7.2.1",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
+    "terser-webpack-plugin": "^4.2.3"
   },
   "eslintConfig": {
     "root": true,
