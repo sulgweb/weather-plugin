@@ -22,9 +22,6 @@ const copyFiles = [
 // 复制插件
 const plugins = [
 	new OptimizeCssAssetsPlugin(),
-	new CopyWebpackPlugin({
-		patterns: copyFiles
-	}),
 	new TerserPlugin({
 		parallel:2,
 		terserOptions:{
@@ -35,6 +32,9 @@ const plugins = [
 				safari10: true
 			}
 		}
+	}),
+	new CopyWebpackPlugin({
+		patterns: copyFiles
 	}),
 	
 ];
